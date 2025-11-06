@@ -8,19 +8,27 @@ import { HealthController } from './controllers/health.controller';
 import { OnboardingGatewayController } from './controllers/onboarding.controller';
 import { PaystackWebhookController } from './controllers/webhooks/paystack.webhook';
 
+import { ServeStaticModule } from '@nestjs/serve-static'; // ✅ added
+import { join } from 'path'; // ✅ added
+
 function buildRabbitUrl(config: ConfigService): string {
   const user = encodeURIComponent(config.get('RABBITMQ_USER') ?? 'guest');
   const pass = encodeURIComponent(config.get('RABBITMQ_PASS') ?? 'guest');
   const host = config.get('RABBITMQ_HOST') ?? 'localhost';
   const port = config.get('RABBITMQ_PORT') ?? '5672';
   const vhost = encodeURIComponent(config.get('RABBITMQ_VHOST') ?? '/');
-
   return `amqp://${user}:${pass}@${host}:${port}/${vhost}`;
 }
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+
+    // ✅ Static asset hosting for your logo, brand files, etc.
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      serveRoot: '/assets', // ✅ URL prefix => /assets/logo.png
+    }),
 
     ClientsModule.registerAsync([
       {
@@ -32,9 +40,7 @@ function buildRabbitUrl(config: ConfigService): string {
           options: {
             urls: [buildRabbitUrl(config)],
             queue: config.get('VALIDATION_QUEUE') ?? 'validation_queue',
-            queueOptions: {
-              durable: true,
-            },
+            queueOptions: { durable: true },
           },
         }),
       },
@@ -48,15 +54,18 @@ function buildRabbitUrl(config: ConfigService): string {
           options: {
             urls: [buildRabbitUrl(config)],
             queue: config.get('CRYPT2P_QUEUE') ?? 'crypt2p_queue',
-            queueOptions: {
-              durable: true,
-            },
+            queueOptions: { durable: true },
           },
         }),
       },
     ]),
   ],
-  controllers: [ValidationHttpController, OnboardingGatewayController, PaystackWebhookController],
+  controllers: [
+    ValidationHttpController,
+    OnboardingGatewayController,
+    PaystackWebhookController,
+    HealthController,
+  ],
   providers: [GatewayService],
   exports: [GatewayService],
 })
