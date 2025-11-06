@@ -5,6 +5,7 @@ import {
   Length,
   Matches,
   IsOptional,
+  IsEmail,
 } from 'class-validator';
 
 export class VerifyAccountDto {
@@ -45,6 +46,14 @@ export class VerifyAccountDto {
 }
 
 export class VerifyBvnDto {
+   @ApiProperty({
+    example: 'Samuel@example.com',
+    description: 'email associated with crypt2p',
+  })
+  @IsEmail()
+  @IsNotEmpty({ message: 'Email is required' })
+  email!: string;
+
   @ApiProperty({
     example: '12345678901',
     description: '11-digit BVN number',
@@ -70,19 +79,6 @@ export class VerifyBvnDto {
   @Length(3, 6, { message: 'bankCode must be 3-6 digits' })
   bankCode!: string;
 
-  @ApiProperty({
-    example: 'Samuel',
-    description: 'First name associated with BVN',
-  })
-  @IsString()
-  @IsNotEmpty({ message: 'firstName is required' })
-  firstName!: string;
+ 
 
-  @ApiProperty({
-    example: 'Osarieme',
-    description: 'Last name associated with BVN',
-  })
-  @IsString()
-  @IsNotEmpty({ message: 'lastName is required' })
-  lastName!: string;
 }

@@ -5,6 +5,8 @@ import { ServiceName } from './domain/enums/service-name.enum';
 import { GatewayService } from './infrastructure/gateway/gateway.service';
 import { ValidationHttpController } from './controllers/validation.controller';
 import { HealthController } from './controllers/health.controller';
+import { OnboardingGatewayController } from './controllers/onboarding.controller';
+import { PaystackWebhookController } from './controllers/webhooks/paystack.webhook';
 
 @Module({
   imports: [
@@ -44,7 +46,7 @@ import { HealthController } from './controllers/health.controller';
       },
     ]),
   ],
-  controllers: [ValidationHttpController, HealthController],
+  controllers: [ValidationHttpController, OnboardingGatewayController, PaystackWebhookController],
   providers: [GatewayService],
   exports: [GatewayService],
 })

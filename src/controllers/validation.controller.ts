@@ -30,4 +30,6 @@ export class ValidationHttpController {
   verifyBvn(@Body() dto: VerifyBvnDto) {
     return this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'bvn.verify' }, dto);
   }
+
+  
 }
