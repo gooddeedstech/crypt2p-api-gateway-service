@@ -10,6 +10,7 @@ import { PaystackWebhookController } from './controllers/webhooks/paystack.webho
 
 import { ServeStaticModule } from '@nestjs/serve-static'; // ✅ added
 import { join } from 'path'; // ✅ added
+import { BushaGatewayController } from './controllers/busha.controller';
 
 function buildRabbitUrl(config: ConfigService): string {
   const user = encodeURIComponent(config.get('RABBITMQ_USER') ?? 'guest');
@@ -65,6 +66,7 @@ function buildRabbitUrl(config: ConfigService): string {
     ValidationHttpController,
     OnboardingGatewayController,
     PaystackWebhookController,
+    BushaGatewayController,
     HealthController,
   ],
   providers: [GatewayService],
