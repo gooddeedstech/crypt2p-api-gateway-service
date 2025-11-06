@@ -25,9 +25,10 @@ function buildRabbitUrl(config: ConfigService): string {
     ConfigModule.forRoot({ isGlobal: true }),
 
     // ✅ Static asset hosting for your logo, brand files, etc.
-    ServeStaticModule.forRoot({
+     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/assets', // ✅ URL prefix => /assets/logo.png
+      serveRoot: '/assets',
+      exclude: ['/api*', '/docs*'],
     }),
 
     ClientsModule.registerAsync([
