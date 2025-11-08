@@ -47,38 +47,66 @@ export class VerifyAccountDto {
 
 export class VerifyBvnDto {
    @ApiProperty({
-    example: 'Samuel@example.com',
-    description: 'email associated with crypt2p',
+    example: 'bojack@horsinaround.com',
+    description: 'User email associated with the Paystack customer record',
   })
   @IsEmail()
-  @IsNotEmpty({ message: 'Email is required' })
-  email!: string;
-
+  @IsNotEmpty()
+  email: string;
+  
   @ApiProperty({
-    example: '12345678901',
-    description: '11-digit BVN number',
+    example: 'NG',
+    description: 'Country code (always NG for Nigeria)',
   })
   @IsString()
-  @Matches(/^\d{11}$/, { message: 'BVN must be exactly 11 digits' })
-  bvn!: string;
+  @IsNotEmpty()
+  country: string;
+
+  @ApiProperty({
+    example: 'bank_account',
+    description: 'Type of verification (bank_account for BVN verification)',
+  })
+  @IsString()
+  @IsNotEmpty()
+  type: string;
 
   @ApiProperty({
     example: '0123456789',
-    description: '10-digit NUBAN',
+    description: 'User’s bank account number (10 digits)',
   })
   @IsString()
-  @Matches(/^\d{10}$/, { message: 'accountNumber must be 10 digits' })
-  accountNumber!: string;
+  @Length(10, 10, { message: 'Account number must be 10 digits' })
+  account_number: string;
 
   @ApiProperty({
-    example: '058',
-    description: 'Bank code',
+    example: '200123456677',
+    description: 'User’s BVN number (11 digits)',
   })
   @IsString()
-  @Matches(/^\d+$/, { message: 'bankCode must only contain numbers' })
-  @Length(3, 6, { message: 'bankCode must be 3-6 digits' })
-  bankCode!: string;
+  @Length(11, 11, { message: 'BVN must be 11 digits' })
+  bvn: string;
 
- 
+  @ApiProperty({
+    example: '007',
+    description: 'Bank code for the selected bank (e.g. Access = 044, Polaris = 076)',
+  })
+  @IsString()
+  @IsNotEmpty()
+  bank_code: string;
 
+  @ApiProperty({
+    example: 'Asta',
+    description: 'First name of the user (used for cross-verification)',
+  })
+  @IsString()
+  @IsNotEmpty()
+  first_name: string;
+
+  @ApiProperty({
+    example: 'Lavista',
+    description: 'Last name of the user (used for cross-verification)',
+  })
+  @IsString()
+  @IsNotEmpty()
+  last_name: string;
 }

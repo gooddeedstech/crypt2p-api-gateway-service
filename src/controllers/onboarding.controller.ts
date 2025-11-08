@@ -1,8 +1,10 @@
-import { Body, Controller, HttpException, HttpStatus, InternalServerErrorException, Post, Req } from '@nestjs/common';
+import { Body, Controller, HttpException, HttpStatus, InternalServerErrorException, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GatewayService } from '../infrastructure/gateway/gateway.service';
 import { ServiceName } from '@/domain/enums/service-name.enum';
-import { ConfirmEmailVerificationDto, ConfirmResetDto, LoginDto, LoginPinDto, RegisterDto, SetPinDto, StartEmailVerificationDto, StartResetDto } from './dto/onboarding.dto';
+import { ChangePasswordDto, ConfirmEmailVerificationDto, ConfirmResetDto, LoginDto, LoginPinDto, RegisterDto, SetPinDto, StartEmailVerificationDto, StartResetDto } from './dto/onboarding.dto';
+import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
+import { ChangePinDto, UpdateProfileDto } from './dto/user-update.dto';
 
 @ApiTags('Onboarding')
 @Controller('onboarding')
@@ -53,11 +55,10 @@ loginPassword(@Body() dto: LoginDto) {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Set login PIN' })
   @ApiBody({ type: SetPinDto })
+  @UseGuards(JwtAuthGuard) 
   async setPin(@Req() req: any, @Body() dto: SetPinDto) {
-    // ✅ 1. Extract userId from JWT
     const userId = req.user?.id;
 
-    // ✅ 2. If no JWT or invalid token → throw 401
     if (!userId) {
       throw new HttpException(
         {
@@ -68,7 +69,6 @@ loginPassword(@Body() dto: LoginDto) {
       );
     }
 
-    // ✅ 3. Forward to Validation microservice
     return this.gateway.send(
       ServiceName.VALIDATION_SERVICE,
       { cmd: 'onboarding.pin.set' },
@@ -103,6 +103,56 @@ async loginPin(@Body() dto: LoginPinDto) {
       ServiceName.VALIDATION_SERVICE,
       { cmd: 'onboarding.reset.confirm' },
       dto,
+    );
+  }
+
+  
+  @Put('change-password')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard) 
+  @ApiOperation({ summary: 'Change password (via Validation microservice)' })
+  async changePassword(@Req() req: any, @Body() dto: ChangePasswordDto) {
+    const userId = req.user?.id;
+    if (!userId)
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+
+    return this.gateway.send(
+      ServiceName.VALIDATION_SERVICE,
+      { cmd: 'users.change.password' },
+      { userId, dto },
+    );
+  }
+
+
+  @Put('change-pin')
+   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard) 
+  @ApiOperation({ summary: 'Change PIN (via Validation microservice)' })
+  async changePin(@Req() req: any, @Body() dto: ChangePinDto) {
+    const userId = req.user?.id;
+    if (!userId)
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+
+    return this.gateway.send(
+      ServiceName.VALIDATION_SERVICE,
+      { cmd: 'users.change.pin' },
+      { userId, dto },
+    );
+  }
+
+  @Put('update-profile')
+   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard) 
+  @ApiOperation({ summary: 'Update user profile' })
+  async updateProfile(@Req() req: any, @Body() dto: UpdateProfileDto) {
+    const userId = req.user?.id;
+    if (!userId)
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+
+    return this.gateway.send(
+      ServiceName.VALIDATION_SERVICE,
+      { cmd: 'users.update.profile' },
+      { userId, dto },
     );
   }
 }

@@ -118,7 +118,7 @@ export class LoginDto {
  ✅ PIN LOGIN
 ----------------------------------------------*/
 export class LoginPinDto {
-  @ApiProperty({ example: 'john.doe@example.com' })
+  @ApiProperty({ example: 'sammieville@gmail.com' })
   @IsEmail()
   email: string;
 

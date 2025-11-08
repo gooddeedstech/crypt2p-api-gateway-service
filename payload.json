@@ -1,0 +1,13 @@
+{
+  "business_id": "BUS_tg6yujbZ1nMu5BLQkPGGO",
+  "event": "transfer.funds_converted",
+  "data": {
+    "id": "TRF_TEST123",
+    "profile_id": "BUS_tg6yujbZ1nMu5BLQkPGGO",
+    "status": "completed",
+    "source_currency": "BTC",
+    "target_currency": "BTC",
+    "source_amount": "0.001",
+    "target_amount": "0.001"
+  }
+}

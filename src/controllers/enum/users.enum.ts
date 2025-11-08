@@ -1,0 +1,7 @@
+export enum DepositStatus {
+  PENDING = 'PENDING',
+  PROCESSING = 'PROCESSING',
+  SUCCESSFUL = 'SUCCESSFUL',
+  FAILED = 'FAILED',
+  CANCELLED = 'CANCELLED',
+}

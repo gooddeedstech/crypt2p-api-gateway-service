@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
@@ -5,6 +6,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,6 +18,14 @@ async function bootstrap() {
     allowedHeaders: '*',
     methods: '*',
   });
+  app.use(
+  express.json({
+    verify: (req: any, res, buf) => {
+      req.rawBody = buf; // ⚡ keep Buffer, not .toString()
+    },
+  }),
+);
+
 
   // ✅ Fix Swagger blank page due to CSP restrictions
   app.use(
