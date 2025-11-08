@@ -17,7 +17,7 @@ export class ValidationHttpController {
   getBanks(@Query('country') country?: string) {
     return this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'banks.get' }, { country });
   }
-
+ 
   @Get('account/resolve')
   @ApiOperation({ summary: 'Resolve bank account number' })
   resolveAccount(@Query() dto: VerifyAccountDto) {
