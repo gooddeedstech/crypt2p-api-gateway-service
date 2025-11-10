@@ -1,4 +1,4 @@
-import { Body, Controller, HttpException, HttpStatus, InternalServerErrorException, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, InternalServerErrorException, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GatewayService } from '../infrastructure/gateway/gateway.service';
 import { ServiceName } from '@/domain/enums/service-name.enum';
@@ -153,6 +153,24 @@ async loginPin(@Body() dto: LoginPinDto) {
       ServiceName.VALIDATION_SERVICE,
       { cmd: 'users.update.profile' },
       { userId, dto },
+    );
+  }
+
+   @Get('me')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get currently authenticated user profile' })
+  async getCurrentUser(@Req() req: any) {
+    const user = req.user;
+    if (!user) {
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+    }
+
+    const userId = user.id;
+    return this.gateway.send(
+      ServiceName.VALIDATION_SERVICE,
+      { cmd: 'users.find.byId' },
+      { userId },
     );
   }
 }
