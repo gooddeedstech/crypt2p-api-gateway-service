@@ -11,7 +11,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
- 
 
 @ApiTags('Webhooks')
 @Controller('v1/webhooks')
@@ -23,27 +22,21 @@ export class BushaGatewayWebhookController {
     private readonly hmacUtil: BushaHmacUtil,
   ) {}
 
-  /**
-   * ✅ Receives Busha webhooks, verifies HMAC signature,
-   * then forwards verified payload to the main microservice.
-   */
   @Post('crypto-transfer')
-  @ApiOperation({ summary: 'Busha crypto transfer webhook (gateway → validation service)' })
+  @ApiOperation({ summary: 'Busha crypto transfer webhook (gateway → microservice)' })
   @HttpCode(200)
   async handleWebhook(
     @Req() req: any,
     @Headers('x-busha-signature') signature: string,
   ) {
-    const rawBody = req.rawBody ;
+    const rawBody = req.rawBody;
     const payload = req.body;
-
-    console.log('🔐 Loaded BUSHA_WEBHOOK_SECRET:', process.env.BUSHA_WEBHOOK_SECRET);
+    const event = payload?.event;
+    const data = payload?.data;
 
     this.logger.log(`📩 Incoming Busha Webhook: ${JSON.stringify(payload)}`);
-console.log('RAW BODY (hex):', req.rawBody.toString('hex'));
 
-
-    // ✅ Step 1: Verify HMAC signature
+    // ✅ Step 1: Verify HMAC Signature
     try {
       this.hmacUtil.verifySignature(rawBody, signature);
       this.logger.log('✅ Busha HMAC signature verified');
@@ -53,21 +46,41 @@ console.log('RAW BODY (hex):', req.rawBody.toString('hex'));
     }
 
     // ✅ Step 2: Validate payload
-    const event = payload?.event;
-    const data = payload?.data;
     if (!event || !data?.id) {
       throw new UnauthorizedException('Invalid webhook payload');
     }
 
-    // ✅ Step 3: Forward to main microservice (Validation / Wallet Service)
-    try {
-      await this.gateway.send(
-        ServiceName.VALIDATION_SERVICE,
-        { cmd: 'busha.webhook.handle' },
-        payload,
-      );
+    // ✅ Step 3: Determine which service to route to
+    const SELL_EVENTS = [
+      'transfer.funds_converted',
+      'transfer.outgoing_payment_sent',
+      'transfer.funds_delivered',
+    ];
 
-      this.logger.log(`📤 Forwarded webhook ${event} → validation microservice`);
+    const BUY_EVENTS = [
+      'transfer.pending',
+      'transfer.processing',
+      'transfer.funds_received',
+    ];
+
+    let targetCmd: string | null = null;
+    let targetService = ServiceName.VALIDATION_SERVICE;
+
+    if (BUY_EVENTS.includes(event)) {
+      targetCmd = 'busha.buy.webhook';
+      targetService = ServiceName.VALIDATION_SERVICE;
+    } else if (SELL_EVENTS.includes(event)) {
+      targetCmd = 'busha.sell.webhook';
+      targetService = ServiceName.VALIDATION_SERVICE;
+    } else {
+      this.logger.warn(`⚠️ Unknown Busha event: ${event} (ignored)`);
+      return { ignored: true };
+    }
+
+    // ✅ Step 4: Forward to target microservice
+    try {
+      await this.gateway.send(targetService, { cmd: targetCmd }, payload);
+      this.logger.log(`📤 Forwarded ${event} → ${targetCmd}`);
       return { success: true };
     } catch (error: any) {
       this.logger.error(`❌ Microservice forwarding failed: ${error.message}`);

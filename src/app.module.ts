@@ -19,6 +19,7 @@ import { BushaGatewayWebhookController } from './webhooks/busha.webhook.controll
 import { BushaHmacUtil } from './utils/busha-hmac.util';
 import { RubiesGatewayController } from './controllers/rubies.controller';
 
+
 // ✅ Build RabbitMQ connection URL
 function buildRabbitUrl(config: ConfigService): string {
   const user = encodeURIComponent(config.get('RABBITMQ_USER') ?? 'guest');

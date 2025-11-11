@@ -17,6 +17,13 @@ export class GenerateDepositWalletDto {
   @IsNumberString()
   amount: string;
 
+   @ApiProperty({  
+    example: '1450',
+    description: 'The current exchange rate of asset (as a string)',
+  })
+  @IsNumberString()
+  exchangeRate: string;
+
   @ApiProperty({
     example: 'TRC20',
     description: 'The blockchain network for the deposit (e.g., ERC20, BEP20, TRC20)',

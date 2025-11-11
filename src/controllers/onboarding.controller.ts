@@ -173,4 +173,31 @@ async loginPin(@Body() dto: LoginPinDto) {
       { userId },
     );
   }
+
+    @Post('logout')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary: 'Logout user',
+    description:
+      'Logs out the currently authenticated user and clears session metadata.',
+  })
+  async logout(@Req() req: any) {
+    const userId = req.user?.id;
+    if (!userId)
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+
+    try {
+      return await this.gateway.send(
+        ServiceName.VALIDATION_SERVICE,
+        { cmd: 'onboarding.logout' },
+        { userId },
+      );
+    } catch (err: any) {
+      throw new HttpException(
+        err.message || 'Logout failed',
+        err.statusCode || HttpStatus.BAD_GATEWAY,
+      );
+    }
+  }
 }
