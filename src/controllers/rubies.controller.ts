@@ -27,11 +27,11 @@ export class RubiesGatewayController {
     return this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'rubies.name.enquiry' }, dto);
   }
 
-  @Post('fund-transfer')
-  @ApiOperation({ summary: 'Initiate a fund transfer' })
-  async fundTransfer(@Body() dto: FundTransferDto) {
-    return this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'rubies.fund.transfer' }, dto);
-  }
+  // @Post('fund-transfer')
+  // @ApiOperation({ summary: 'Initiate a fund transfer' })
+  // async fundTransfer(@Body() dto: FundTransferDto) {
+  //   return this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'rubies.fund.transfer' }, dto);
+  // }
 
   @Post('confirm-transfer')
   @ApiOperation({ summary: 'Confirm transfer status (TSQ)' })
@@ -39,11 +39,11 @@ export class RubiesGatewayController {
     return this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'rubies.transfer.confirm' }, dto);
   }
 
-  @Post('webhook')
-  @ApiOperation({ summary: 'Handle Rubies webhook' })
-  async webhook(@Body() body: any) {
-    return this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'rubies.webhook' }, body);
-  }
+  // @Post('webhook')
+  // @ApiOperation({ summary: 'Handle Rubies webhook' })
+  // async webhook(@Body() body: any) {
+  //   return this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'rubies.webhook' }, body);
+  // }
 
     @Get('map')
   @ApiOperation({ summary: 'Map Paystack bank code to Rubies bank code' })
