@@ -86,7 +86,7 @@ export class BushaGatewayController {
         err.message || 'Failed to create buy request',
         err.statusCode || HttpStatus.BAD_GATEWAY,
       );
-    }
+    } 
   }
 
    @Get('transaction_history/me')
