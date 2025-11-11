@@ -18,6 +18,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { BushaGatewayWebhookController } from './webhooks/busha.webhook.controller';
 import { BushaHmacUtil } from './utils/busha-hmac.util';
 import { RubiesGatewayController } from './controllers/rubies.controller';
+import { FeesGatewayController } from './controllers/fees.gateway.controller';
 
 
 // ✅ Build RabbitMQ connection URL
@@ -88,6 +89,7 @@ function buildRabbitUrl(config: ConfigService): string {
     ValidationHttpController,
     OnboardingGatewayController,
     PaystackWebhookController,
+    FeesGatewayController,
     BushaGatewayController,
     RubiesGatewayController,
     BushaGatewayWebhookController,
