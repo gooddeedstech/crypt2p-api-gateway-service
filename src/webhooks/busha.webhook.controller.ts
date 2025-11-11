@@ -63,13 +63,13 @@ export class BushaGatewayWebhookController {
     }
 
     // ✅ Step 3: Determine routing (buy vs. sell)
-    const BUY_EVENTS = [
+    const SELL_EVENTS = [
       'transfer.pending',
       'transfer.processing',
       'transfer.funds_received',
     ];
 
-    const SELL_EVENTS = [
+    const BUY_EVENTS = [
       'transfer.funds_converted',
       'transfer.outgoing_payment_sent',
       'transfer.funds_delivered',
