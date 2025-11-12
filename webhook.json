@@ -1,15 +1,40 @@
 {
-  "event": "customeridentification.success",
+  "business_id": "BUS_o2v4yTj2LoGpwdUXppNy9",
+  "event": "transfer.funds_received",
   "data": {
-    "customer_id": "9387490384",
-    "customer_code": "CUS_ej56ryumdp6fjp1",
-    "email": "bojack@horsinaround.com",
-    "identification": {
-      "country": "NG",
-      "type": "bank_account",
-      "bvn": "200*****677",
-      "account_number": "012****789",
-      "bank_code": "007"
-    }
+    "id": "TRF_Mi4jWGRMNY3G",
+    "profile_id": "BUS_o2v4yTj2LoGpwdUXppNy9",
+    "quote_id": "QUO_N0frKNsQQxP5",
+    "description": "Sold USDT",
+    "sub_description": "For USDT",
+    "source_currency": "USDT",
+    "target_currency": "USDT",
+    "source_amount": "10",
+    "target_amount": "10",
+    "rate": {
+      "rate": "1",
+      "side": "sell",
+      "type": "FIXED",
+      "source_currency": "USDT",
+      "target_currency": "USDT"
+    },
+    "fees": [],
+    "pay_in": {
+      "address": "TQFfWGm44egHE5ck8MKXsiurvnBmAvN5BK",
+      "expires_at": "2025-11-11T16:06:36.719756Z",
+      "network": "TRX",
+      "type": "address",
+      "blockchain_hash": "2d16acffaa803ebbca3cfe6e2e1c9f00473acbe3d4403fc77ea99565763aaa24",
+      "blockchain_url": "https://tronscan.org/#/transaction/2d16acffaa803ebbca3cfe6e2e1c9f00473acbe3d4403fc77ea99565763aaa24"
+    },
+    "status": "funds_received",
+    "timeline": {
+      "total_steps": 0,
+      "current_step": 0,
+      "transfer_status": "",
+      "events": []
+    },
+    "created_at": "2025-11-11T15:06:36.651984Z",
+    "updated_at": "2025-11-11T15:07:29.122701Z"
   }
 }

@@ -114,7 +114,7 @@ async loginPin(@Body() dto: LoginPinDto) {
   async changePassword(@Req() req: any, @Body() dto: ChangePasswordDto) {
     const userId = req.user?.id;
     if (!userId)
-      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Unauthorized, Please Login. Thanks.', HttpStatus.UNAUTHORIZED);
 
     return this.gateway.send(
       ServiceName.VALIDATION_SERVICE,
@@ -131,7 +131,7 @@ async loginPin(@Body() dto: LoginPinDto) {
   async changePin(@Req() req: any, @Body() dto: ChangePinDto) {
     const userId = req.user?.id;
     if (!userId)
-      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Unauthorized, Please Login. Thanks.', HttpStatus.UNAUTHORIZED);
 
     return this.gateway.send(
       ServiceName.VALIDATION_SERVICE,
@@ -147,7 +147,7 @@ async loginPin(@Body() dto: LoginPinDto) {
   async updateProfile(@Req() req: any, @Body() dto: UpdateProfileDto) {
     const userId = req.user?.id;
     if (!userId)
-      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Unauthorized, Please Login. Thanks.', HttpStatus.UNAUTHORIZED);
 
     return this.gateway.send(
       ServiceName.VALIDATION_SERVICE,
@@ -163,7 +163,7 @@ async loginPin(@Body() dto: LoginPinDto) {
   async getCurrentUser(@Req() req: any) {
     const user = req.user;
     if (!user) {
-      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Unauthorized, Please Login. Thanks.', HttpStatus.UNAUTHORIZED);
     }
 
     const userId = user.id;
@@ -185,7 +185,7 @@ async loginPin(@Body() dto: LoginPinDto) {
   async logout(@Req() req: any) {
     const userId = req.user?.id;
     if (!userId)
-      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Unauthorized, Please Login. Thanks.', HttpStatus.UNAUTHORIZED);
 
     try {
       return await this.gateway.send(

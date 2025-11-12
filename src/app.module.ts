@@ -19,6 +19,10 @@ import { BushaGatewayWebhookController } from './webhooks/busha.webhook.controll
 import { BushaHmacUtil } from './utils/busha-hmac.util';
 import { RubiesGatewayController } from './controllers/rubies.controller';
 import { FeesGatewayController } from './controllers/fees.gateway.controller';
+import { BankDetailGatewayController } from './controllers/bank-detail.gateway.controller';
+import { UserWalletGatewayController } from './controllers/user-wallet.gateway.controller';
+import { NotificationGatewayController } from './controllers/notification.gateway.controller';
+import { UserDeviceGatewayController } from './controllers/user-device.gateway.controller';
 
 
 // ✅ Build RabbitMQ connection URL
@@ -88,7 +92,10 @@ function buildRabbitUrl(config: ConfigService): string {
   controllers: [
     ValidationHttpController,
     OnboardingGatewayController,
-    PaystackWebhookController,
+    UserDeviceGatewayController,
+    BankDetailGatewayController,
+    UserWalletGatewayController,
+    NotificationGatewayController,
     FeesGatewayController,
     BushaGatewayController,
     RubiesGatewayController,

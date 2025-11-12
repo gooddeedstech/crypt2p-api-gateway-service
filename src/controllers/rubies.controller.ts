@@ -15,23 +15,7 @@ import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
 export class RubiesGatewayController {
   constructor(private readonly gateway: GatewayService) {}
 
-  @Post('banks')
-  @ApiOperation({ summary: 'Get list of banks' })
-  async getBanks() {
-    return this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'rubies.bank.list' }, {});
-  }
 
-  @Post('name-enquiry')
-  @ApiOperation({ summary: 'Name enquiry (verify account details)' })
-  async nameEnquiry(@Body() dto: NameEnquiryDto) {
-    return this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'rubies.name.enquiry' }, dto);
-  }
-
-  // @Post('fund-transfer')
-  // @ApiOperation({ summary: 'Initiate a fund transfer' })
-  // async fundTransfer(@Body() dto: FundTransferDto) {
-  //   return this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'rubies.fund.transfer' }, dto);
-  // }
 
   @Post('confirm-transfer')
   @ApiOperation({ summary: 'Confirm transfer status (TSQ)' })

@@ -55,3 +55,15 @@ export class UpdateProfileDto {
   @IsOptional()
   dob?: string; // ISO date string
 }
+
+export enum DeviceType {
+  ANDROID = 'ANDROID',
+  IOS = 'IOS',
+  WEB = 'WEB',
+}
+
+export enum DeviceStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  REVOKED = 'REVOKED',
+}
