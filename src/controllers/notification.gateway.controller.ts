@@ -14,6 +14,7 @@ import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
 import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
 import { GatewayService } from '@/infrastructure/gateway/gateway.service';
 import { ServiceName } from '@/domain/enums/service-name.enum';
+import { SendNotificationDto } from './dto/send-notification.dto';
 
 @ApiTags('Notifications')
 @Controller('notifications')
@@ -22,7 +23,7 @@ export class NotificationGatewayController {
 
   @Post('send')
   @ApiOperation({ summary: 'Send notification to a user' })
-  async send(@Body() body: any) {
+  async send(@Body() body: SendNotificationDto) {
     return await this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'notification.send' }, body);
   }
 
