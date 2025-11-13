@@ -148,7 +148,7 @@ export class SetPinDto {
 export class ChangePasswordDto {
   @ApiProperty({ example: 'OldPass@123' })
   @IsString()
-  currentPassword: string;
+  currentPassword: string; 
 
   @ApiProperty({ example: 'NewPass@456' })
   @IsString()

@@ -23,6 +23,13 @@ import { BankDetailGatewayController } from './controllers/bank-detail.gateway.c
 import { UserWalletGatewayController } from './controllers/user-wallet.gateway.controller';
 import { NotificationGatewayController } from './controllers/notification.gateway.controller';
 import { UserDeviceGatewayController } from './controllers/user-device.gateway.controller';
+import { AdminAuthGatewayController } from './controllers/admin-auth.gateway.controller';
+import { AdminJwtStrategy } from './auth/admin-jwt.strategy';
+import { AnalyticsGatewayController } from './controllers/analytics.gateway.controller';
+import { AdminUserGatewayController } from './controllers/user.gateway.controller';
+import { TransactionAnalyticsGatewayController } from './controllers/transaction-analytics.gateway.controller';
+import { AdminNotificationGatewayController } from './controllers/admin-manage-notification.gateway.controller';
+import { LedgerGatewayController } from './controllers/transaction-ledger.gateway.controller';
 
 
 // ✅ Build RabbitMQ connection URL
@@ -96,14 +103,20 @@ function buildRabbitUrl(config: ConfigService): string {
     BankDetailGatewayController,
     UserWalletGatewayController,
     NotificationGatewayController,
-    FeesGatewayController,
+    FeesGatewayController, 
     BushaGatewayController,
     RubiesGatewayController,
     BushaGatewayWebhookController,
     HealthController,
+    AdminAuthGatewayController,
+    AnalyticsGatewayController,
+    AdminUserGatewayController,
+    TransactionAnalyticsGatewayController,
+    AdminNotificationGatewayController,
+    LedgerGatewayController, 
   ],
 
- providers: [GatewayService, BushaHmacUtil, JwtStrategy],
+ providers: [GatewayService, BushaHmacUtil, JwtStrategy, AdminJwtStrategy],
 
   exports: [GatewayService],
 })

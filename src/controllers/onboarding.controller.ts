@@ -44,6 +44,7 @@ confirmEmail(@Body() dto: ConfirmEmailVerificationDto) {
 @Post('login/password')
 @ApiOperation({ summary: 'Login with email and password' })
 loginPassword(@Body() dto: LoginDto) {
+  console.log(dto)
   return this.gateway.send(
     ServiceName.VALIDATION_SERVICE,
     { cmd: 'onboarding.login.password' },

@@ -29,23 +29,23 @@ export class RubiesGatewayController {
   //   return this.gateway.send(ServiceName.VALIDATION_SERVICE, { cmd: 'rubies.webhook' }, body);
   // }
 
-    @Get('map')
-  @ApiOperation({ summary: 'Map Paystack bank code to Rubies bank code' })
-  async mapBank(@Query('paystackCode') paystackCode: string) {
-    return this.gateway.send(
-      ServiceName.VALIDATION_SERVICE,
-      { cmd: 'rubies.bank.map' },
-      { paystackCode },
-    ); 
-  }
+  //   @Get('map')
+  // @ApiOperation({ summary: 'Map Paystack bank code to Rubies bank code' })
+  // async mapBank(@Query('paystackCode') paystackCode: string) {
+  //   return this.gateway.send(
+  //     ServiceName.VALIDATION_SERVICE,
+  //     { cmd: 'rubies.bank.map' },
+  //     { paystackCode },
+  //   ); 
+  // }
 
-  @Get('all-mappings')
-  @ApiOperation({ summary: 'View all Paystack → Rubies mappings' })
-  async getAllMappings() {
-    return this.gateway.send(
-      ServiceName.VALIDATION_SERVICE,
-      { cmd: 'rubies.bank.mappings' },
-      {},
-    );
-  }
+  // @Get('all-mappings')
+  // @ApiOperation({ summary: 'View all Paystack → Rubies mappings' })
+  // async getAllMappings() {
+  //   return this.gateway.send(
+  //     ServiceName.VALIDATION_SERVICE,
+  //     { cmd: 'rubies.bank.mappings' },
+  //     {},
+  //   );
+  // }
 }
