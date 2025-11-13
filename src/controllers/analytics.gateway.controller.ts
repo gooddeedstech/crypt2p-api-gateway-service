@@ -13,6 +13,7 @@ import { AdminJwtAuthGuard } from '@/auth/admin-jwt-auth.guard';
 import { RolesGuard } from '@/auth/roles.guard';
 import { Roles, AdminRole } from '@/auth/roles.decorator';
 import { AssetType, CryptoTransactionType } from './enum/users.enum';
+import { DeviceStatus, DeviceType } from './dto/user-update.dto';
 
 
 @ApiTags('Analytics')
@@ -210,6 +211,40 @@ async assetDaysGrouped(
       ServiceName.VALIDATION_SERVICE,
       { cmd: 'busha.assets' },
       { type }, // ✅ pass type to microservice
+    );
+  }
+
+    @Get('device-list')
+  @ApiQuery({ name: 'page', required: false })
+  @ApiQuery({ name: 'limit', required: false })
+  @ApiQuery({ name: 'type', enum: DeviceType, required: false })
+  @ApiQuery({ name: 'status', enum: DeviceStatus, required: false })
+  async listDevices(@Query() query: any) {
+    return await this.gateway.send(
+      ServiceName.VALIDATION_SERVICE,
+      { cmd: 'devices.list' },
+      query,
+    );
+  }
+
+  @Get('by-type')
+  async devicesByType() {
+    return await this.gateway.send(
+      ServiceName.VALIDATION_SERVICE,
+      { cmd: 'devices.by-type' },
+      {},
+    );
+  }
+
+  @Get('daily')
+  @ApiQuery({ name: 'days', required: false })
+  async dailyDevices(@Query('days') days?: string) {
+    const numDays = days ? parseInt(days, 10) : 30;
+
+    return await this.gateway.send(
+      ServiceName.VALIDATION_SERVICE,
+      { cmd: 'devices.daily' },
+      { days: numDays },
     );
   }
 }

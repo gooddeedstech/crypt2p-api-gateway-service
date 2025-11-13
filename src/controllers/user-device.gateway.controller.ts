@@ -6,14 +6,15 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { GatewayService } from '@/infrastructure/gateway/gateway.service';
 import { ServiceName } from '@/domain/enums/service-name.enum';
 import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
-import { DeviceType } from './dto/user-update.dto';
+import { DeviceStatus, DeviceType } from './dto/user-update.dto';
 
 
 @ApiTags('User Devices')
@@ -137,4 +138,6 @@ export class UserDeviceGatewayController {
       );
     }
   }
+
+
 }
