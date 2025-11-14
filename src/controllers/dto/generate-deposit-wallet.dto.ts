@@ -24,4 +24,12 @@ export class GenerateDepositWalletDto {
   @IsString()
   @IsNotEmpty()
   network: string;
+
+   @ApiProperty({
+    example: '00393',
+    description: 'The the bank Id of the depositing bank',
+  })
+  @IsString()
+  @IsNotEmpty()
+  bankId: string;
 }
