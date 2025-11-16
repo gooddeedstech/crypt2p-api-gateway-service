@@ -16,19 +16,6 @@ export class SendBulkNotificationDto {
   @IsEnum(NotificationChannel)
   channel: NotificationChannel;
 
-  @ApiProperty({ enum: NotificationType })
-  @IsEnum(NotificationType)
-  type: NotificationType;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  data?: Record<string, any>;
-
-  @ApiProperty({ required: false, type: [String] })
-  @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  userIds?: string[];
 }
 
 
