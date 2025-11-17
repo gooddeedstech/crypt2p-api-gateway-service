@@ -144,7 +144,7 @@ export class AnalyticsGatewayController {
   @ApiQuery({ name: 'days', required: false, example: 7 })
   @ApiQuery({
     name: 'type',
-    required: false,
+    required: true,
     enum: CryptoTransactionType,
     description: 'Filter by transaction type (optional)',
   })
@@ -174,7 +174,7 @@ export class AnalyticsGatewayController {
 @ApiQuery({ name: 'days', required: false, example: 7 })
 @ApiQuery({
   name: 'type',
-  required: false,
+  required: true,
   enum: CryptoTransactionType,
   description: 'Filter by transaction type',
 })
