@@ -30,6 +30,7 @@ import { AdminUserGatewayController } from './controllers/user.gateway.controlle
 import { TransactionAnalyticsGatewayController } from './controllers/transaction-analytics.gateway.controller';
 import { AdminNotificationGatewayController } from './controllers/admin-manage-notification.gateway.controller';
 import { LedgerGatewayController } from './controllers/transaction-ledger.gateway.controller';
+import { SystemConfigApiGatewayController } from './controllers/system-config.controller';
 
 
 // ✅ Build RabbitMQ connection URL
@@ -114,6 +115,7 @@ function buildRabbitUrl(config: ConfigService): string {
     TransactionAnalyticsGatewayController,
     AdminNotificationGatewayController,
     LedgerGatewayController, 
+    SystemConfigApiGatewayController
   ],
 
  providers: [GatewayService, BushaHmacUtil, JwtStrategy, AdminJwtStrategy],
