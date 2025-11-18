@@ -19,12 +19,12 @@ export class UpdateSingleConfigDto {
 
   @ApiProperty()
   @IsOptional()
-  @IsNumber()
+  @IsString()
   ngnValue?: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsNumber()
+ @IsString()
   usdValue?: string;
 }
 
