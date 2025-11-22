@@ -65,6 +65,7 @@ export class BushaGatewayController {
         amount: 10000,
         walletAddress: 'TXYZabc123xyz567pqr890',
         network: 'BSC',
+        bankId: '2b992bb2bknskn',
       },
     },
   })
@@ -126,6 +127,17 @@ export class BushaGatewayController {
         err?.statusCode || HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+    @Post('confirm/:transferId')
+  @ApiOperation({ summary: 'Confirm Busha transaction status' })
+  @ApiParam({ name: 'transferId' })
+  async confirmTransaction(@Param('transferId') transferId: string) {
+    return this.gateway.send(
+      ServiceName.VALIDATION_SERVICE,
+      { cmd: 'busha.confirm.transaction' },
+      { transferId },
+    );
   }
 
 }
