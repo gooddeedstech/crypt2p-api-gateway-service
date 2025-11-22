@@ -18,7 +18,7 @@ export class UpdateSingleConfigDto {
   description?: string;
 
   @ApiProperty()
-  @IsOptional()
+  @IsOptional() 
   @IsString()
   ngnValue?: string;
 

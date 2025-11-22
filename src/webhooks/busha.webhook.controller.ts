@@ -67,12 +67,14 @@ export class BushaGatewayWebhookController {
       'transfer.pending',
       'transfer.processing',
       'transfer.funds_received',
+      'transfer.cancelled'
     ];
 
     const BUY_EVENTS = [
       'transfer.funds_converted',
       'transfer.outgoing_payment_sent',
       'transfer.funds_delivered',
+      'transfer.cancelled'
     ];
 
     let targetCmd: string | null = null;
@@ -84,7 +86,8 @@ export class BushaGatewayWebhookController {
     } else if (SELL_EVENTS.includes(event)) {
       targetCmd = 'busha.sell.webhook';
       this.logger.log(`🟣 Detected SELL event → ${event}`);
-    } else {
+    }   
+    else {
       this.logger.warn(`⚠️ Unknown Busha event "${event}" (ignored)`);
       return { ignored: true };
     }
